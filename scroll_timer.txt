@@ -1,0 +1,102 @@
+Stack(
+        alignment: AlignmentDirectional.center,
+        children: <Widget>[
+          Container(
+            decoration: BoxDecoration(
+              border: Border(
+                top: BorderSide(color: Colors.black, width: 1),
+                bottom: BorderSide(color: Colors.black, width: 1),
+              ),
+            ),
+            height: 40,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // hours wheel
+              Container(
+                width: 70,
+                child: ListWheelScrollView.useDelegate(
+                  controller: _controller,
+                  itemExtent: 50,
+                  perspective: 0.005,
+                  diameterRatio: 1.2,
+                  physics: FixedExtentScrollPhysics(),
+                  childDelegate: ListWheelChildLoopingListDelegate(
+                    children: List<Widget>.generate(
+                      12,
+                      (index) => Text(
+                        (index + 1).toString(),
+                        style: TextStyle(
+                          fontSize: 40,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
+              SizedBox(
+                width: 10,
+              ),
+
+              // minutes wheel
+              Container(
+                width: 70,
+                child: ListWheelScrollView.useDelegate(
+                  itemExtent: 50,
+                  perspective: 0.005,
+                  diameterRatio: 1.2,
+                  physics: FixedExtentScrollPhysics(),
+                  childDelegate: ListWheelChildLoopingListDelegate(
+                    children: List<Widget>.generate(
+                      60,
+                      (index) => Text(
+                        (index < 10
+                            ? '0' + index.toString()
+                            : index.toString()),
+                        style: TextStyle(
+                          fontSize: 40,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
+              SizedBox(
+                width: 15,
+              ),
+
+              // am or pm
+              Container(
+                width: 70,
+                child: ListWheelScrollView.useDelegate(
+                  itemExtent: 50,
+                  perspective: 0.005,
+                  diameterRatio: 1.2,
+                  physics: FixedExtentScrollPhysics(),
+                  childDelegate: ListWheelChildBuilderDelegate(
+                    childCount: 2,
+                    builder: (context, index) {
+                      if (index == 0) {
+                        return AmPm(
+                          isItAm: true,
+                        );
+                      } else {
+                        return AmPm(
+                          isItAm: false,
+                        );
+                      }
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
